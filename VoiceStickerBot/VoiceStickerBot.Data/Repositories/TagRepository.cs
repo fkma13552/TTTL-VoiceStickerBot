@@ -5,7 +5,7 @@ namespace VoiceStickerBot.Data.Repositories
 {
     public class TagRepository: EntityRepository<Tag>, ITagRepository
     {
-        public TagRepository(MyContext context) : base(context)
+        public TagRepository(VoiceStickerContext context) : base(context)
         {
         }
     }

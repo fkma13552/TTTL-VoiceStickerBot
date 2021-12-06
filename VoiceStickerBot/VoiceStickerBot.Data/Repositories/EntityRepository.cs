@@ -10,10 +10,10 @@ namespace VoiceStickerBot.Data.Repositories
 {
     public class EntityRepository<T>: IEntityRepository<T> where T : class
     {
-        private readonly MyContext _context;
+        private readonly VoiceStickerContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public EntityRepository(MyContext context)
+        public EntityRepository(VoiceStickerContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();

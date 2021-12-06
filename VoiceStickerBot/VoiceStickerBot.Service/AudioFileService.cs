@@ -24,8 +24,8 @@ namespace VoiceStickerBot.Service
 
         public async Task<AudioFileDto> GetById(Guid id)
         {
-            var file = await _audioFileRepository.GetById(id);
-            return file.ToDto();
+            var audioFile = await _audioFileRepository.GetById(id);
+            return audioFile.ToDto();
         }
 
         public Task<IEnumerable<AudioFileDto>> GetPopularAudioFiles()
@@ -37,15 +37,23 @@ namespace VoiceStickerBot.Service
         {
             var filesTags = _audioFileTagRepository.Get<int>().Include("AudioFile").Include("Tag");
 
-            var result = await filesTags
+            var result = filesTags
                     .Where(
                         f => 
                             f.Tag.Name.Contains(filter.Query.ToLower()) ||
-                             f.AudioFile.Name.Contains(filter.Query.ToLower()))
-                    .Select(f => f.AudioFile).ToListAsync();
+                             f.AudioFile.Name.Contains(filter.Query.ToLower()));
+            if (filter.Skip > 0)
+            {
+                result = result.Skip(filter.Skip);
+            }
 
-            return _mapper.Map<List<AudioFileDto>>(result);
+            if (filter.Take > 0)
+            {
+                result = result.Take(filter.Take);
+            }
+            var list = await result.Select(f => f.AudioFile).ToListAsync();
 
+            return _mapper.Map<List<AudioFileDto>>(list);
         }
     }
 }

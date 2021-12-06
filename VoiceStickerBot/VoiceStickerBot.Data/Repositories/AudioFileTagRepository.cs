@@ -7,7 +7,7 @@ namespace VoiceStickerBot.Data.Repositories
 {
     public class AudioFileTagRepository: EntityRepository<AudioFileTag>, IAudioFileTagRepository
     {
-        public AudioFileTagRepository(MyContext context) : base(context)
+        public AudioFileTagRepository(VoiceStickerContext context) : base(context)
         {
         }
     }

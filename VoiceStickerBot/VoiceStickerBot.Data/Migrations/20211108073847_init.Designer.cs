@@ -9,7 +9,7 @@ using VoiceStickerBot.Data;
 
 namespace VoiceStickerBot.Data.Migrations
 {
-    [DbContext(typeof(MyContext))]
+    [DbContext(typeof(VoiceStickerContext))]
     [Migration("20211108073847_init")]
     partial class init
     {

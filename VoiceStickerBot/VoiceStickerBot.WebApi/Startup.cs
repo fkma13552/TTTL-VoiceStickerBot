@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -42,7 +43,8 @@ namespace VoiceStickerBot.WebApi
             services.AddTransient<ITagRepository, TagRepository>();
             services.AddTransient<IAudioFileTagRepository, AudioFileTagRepository>();
             services.AddTransient<IAudioFileService, AudioFileService>();
-            services.AddDbContext<MyContext>();
+            services.AddDbContext<VoiceStickerContext>(opt =>
+            opt.UseSqlServer(Configuration.GetConnectionString("VoiceStickerDb")));
             services.AddAutoMapper(typeof(MappingProfile));
         }
 
