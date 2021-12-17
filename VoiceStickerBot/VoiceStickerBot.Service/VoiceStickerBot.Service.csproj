@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\VoiceStickerBot.Data\VoiceStickerBot.Data.csproj" />
+      <ProjectReference Include="..\VoiceStickerBot.Domain\VoiceStickerBot.Domain.csproj" />
+      <ProjectReference Include="..\VoiceStickerBot.EntityModel\VoiceStickerBot.EntityModel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+    </ItemGroup>
+
+</Project>
