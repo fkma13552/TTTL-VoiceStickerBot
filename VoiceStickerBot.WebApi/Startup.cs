@@ -44,7 +44,8 @@ namespace VoiceStickerBot.WebApi
             services.AddTransient<IAudioFileTagRepository, AudioFileTagRepository>();
             services.AddTransient<IAudioFileService, AudioFileService>();
             services.AddDbContext<VoiceStickerContext>(opt =>
-            opt.UseSqlServer(Configuration.GetConnectionString("VoiceStickerDb")));
+            opt.UseSqlServer(Environment.GetEnvironmentVariable("SQLCONNSTR_VoiceStickerDb") ??
+                             Configuration.GetConnectionString("VoiceStickerDb")));
             services.AddAutoMapper(typeof(MappingProfile));
         }
 
