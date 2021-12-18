@@ -17,6 +17,8 @@ namespace VoiceStickerBot.Service
         private readonly IAudioFileRepository _audioFileRepository;
         private readonly IAudioFileTagRepository _audioFileTagRepository;
         private readonly IMapper _mapper;
+        private readonly string _includePropertiesForGetByQueryAudioFiles =
+            $"{nameof(AudioFileTag)},{nameof(AudioFileTag)}.{nameof(Tag)}";
 
         public AudioFileService(IAudioFileRepository audioFileRepositor, IAudioFileTagRepository audioFileTagRepository, IMapper mapper)
         {
@@ -41,12 +43,25 @@ namespace VoiceStickerBot.Service
             var audioFile = _audioFileRepository.Get<int>(
                 filter.Skip, 
                 filter.Take, 
-                new string(nameof(AudioFileTag) + "," + nameof(AudioFileTag) + "." + nameof(Tag)),
+                _includePropertiesForGetByQueryAudioFiles,
                 file => 
                     file.AudioFileTag.Tag.Name.Contains(filter.Query.ToLower()) ||
                     file.Name.Contains(filter.Query.ToLower()));
 
             return _mapper.Map<List<AudioFileDto>>(audioFile);
+        }
+
+        public async Task Create(CreateAudioFileDto createAudioFileDto)
+        {
+            var newAudioFile = new AudioFile
+            {
+                Id = Guid.NewGuid(),
+                TelegramFileId = createAudioFileDto.TelegramFileId,
+                Name = createAudioFileDto.Name,
+                CreatedOn = DateTime.Now
+            };
+
+            await _audioFileRepository.Create(newAudioFile);
         }
     }
 }

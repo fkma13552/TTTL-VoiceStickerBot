@@ -40,5 +40,11 @@ namespace VoiceStickerBot.WebApi.Controllers
 
             return Ok(dto);
         }
+
+        [HttpPost]
+        public async Task Create([FromBody] CreateAudioFileDto createAudioFileDto)
+        {
+            await _service.Create(createAudioFileDto);
+        }
     }
 }
