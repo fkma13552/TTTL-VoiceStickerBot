@@ -6,5 +6,7 @@ namespace VoiceStickerBot.EntityModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+
+        public AudioFileTag AudioFileTag { get; set; }
     }
 }
