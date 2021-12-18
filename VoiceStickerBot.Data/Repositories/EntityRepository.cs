@@ -74,5 +74,11 @@ namespace VoiceStickerBot.Data.Repositories
 
             return query;
         }
+
+        public async Task Create(T entity)
+        {
+            _dbSet.Add(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

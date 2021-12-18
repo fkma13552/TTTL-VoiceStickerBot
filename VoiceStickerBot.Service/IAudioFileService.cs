@@ -11,5 +11,6 @@ namespace VoiceStickerBot.Service
         public Task<AudioFileDto> GetById(Guid guid);
         public Task<IEnumerable<AudioFileDto>> GetPopularAudioFiles();
         public Task<IEnumerable<AudioFileDto>> GetByQuery(AudioFileFilter filter);
+        public Task Create(CreateAudioFileDto createAudioFileDto);
     }
 }
