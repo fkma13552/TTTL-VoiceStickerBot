@@ -8,7 +8,7 @@ using VoiceStickerBot.Data;
 
 namespace VoiceStickerBot.Data.Migrations
 {
-    [DbContext(typeof(MyContext))]
+    [DbContext(typeof(VoiceStickerContext))]
     partial class MyContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
