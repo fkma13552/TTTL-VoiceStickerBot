@@ -36,7 +36,7 @@ namespace VoiceStickerBot.Service
         public async Task<IEnumerable<AudioFileDto>> GetByQuery(AudioFileFilter filter)
         {
             var filesTags = _audioFileTagRepository.Get<int>().Include("AudioFile").Include("Tag");
-
+            
             var result = filesTags
                     .Where(
                         f => 
