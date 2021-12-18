@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using VoiceStickerBot.Data.Abstract;
 using VoiceStickerBot.Domain;
+using VoiceStickerBot.EntityModel;
 
 namespace VoiceStickerBot.Service
 {
@@ -35,25 +38,15 @@ namespace VoiceStickerBot.Service
 
         public async Task<IEnumerable<AudioFileDto>> GetByQuery(AudioFileFilter filter)
         {
-            var filesTags = _audioFileTagRepository.Get<int>().Include("AudioFile").Include("Tag");
-            
-            var result = filesTags
-                    .Where(
-                        f => 
-                            f.Tag.Name.Contains(filter.Query.ToLower()) ||
-                             f.AudioFile.Name.Contains(filter.Query.ToLower()));
-            if (filter.Skip > 0)
-            {
-                result = result.Skip(filter.Skip);
-            }
+            var audioFile = _audioFileRepository.Get<int>(
+                filter.Skip, 
+                filter.Take, 
+                new string(nameof(AudioFileTag) + "," + nameof(AudioFileTag) + "." + nameof(Tag)),
+                file => 
+                    file.AudioFileTag.Tag.Name.Contains(filter.Query.ToLower()) ||
+                    file.Name.Contains(filter.Query.ToLower()));
 
-            if (filter.Take > 0)
-            {
-                result = result.Take(filter.Take);
-            }
-            var list = await result.Select(f => f.AudioFile).ToListAsync();
-
-            return _mapper.Map<List<AudioFileDto>>(list);
+            return _mapper.Map<List<AudioFileDto>>(audioFile);
         }
     }
 }

@@ -8,5 +8,7 @@ namespace VoiceStickerBot.EntityModel
         public Guid TelegramFileId { get; set; }
         public string Name { get; set; }
         public DateTime CreatedOn { get; set; }
+
+        public AudioFileTag AudioFileTag { get; set; }
     }
 }
