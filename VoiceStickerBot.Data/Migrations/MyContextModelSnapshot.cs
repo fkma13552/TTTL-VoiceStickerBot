@@ -32,7 +32,7 @@ namespace VoiceStickerBot.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TelegramFileId")
-                        .HasColumnType("varchar(70)");
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
